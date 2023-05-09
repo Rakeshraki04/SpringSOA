@@ -1,0 +1,26 @@
+public class accountHelper {
+
+    public static void updateAccountContactCount(List<Contact> conList){
+    
+    Set<Id> AccId = new Set<Id>();
+  
+        for(Contact con:conList){
+            if(con.AccountId!=null){
+                AccId.add(con.AccountId);
+            }
+        }
+    List<Account> AccountList = new List<Account>([Select Id, Name, Number_of_Contacts__c,(Select Id, Name From Contacts)from Account Where Id=:AccId]);
+    List<Account> updateAccountList = new List<Account>();
+    for(Account ac:AccountList){
+        List<Contact> contactlist = ac.contacts;
+        ac.Number_of_Contacts__c = contactlist.size();
+        updateAccountList.add(ac);
+       
+    }
+    if(updateAccountList.size()>0){
+        update updateAccountList;
+    }
+        
+    }
+}
+
