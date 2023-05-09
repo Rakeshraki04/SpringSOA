@@ -1,0 +1,7 @@
+trigger contactsWithAccount on Contact (after insert) {
+
+    If(Trigger.isInsert || Trigger.isafter){
+     
+     accountHelper.updateAccountContactCount(Trigger.new); 
+    }
+}
